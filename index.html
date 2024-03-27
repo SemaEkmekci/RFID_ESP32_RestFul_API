@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+    function LoadData(){
+        fetch("http://192.168.1.25.:3000/getDataSensor/ALAT01")
+        .then(function(reponse){
+            return response.json();
+        })
+        .then(function(parameters){
+            let placeholder = document.querySelector('#data-output');
+            let out = "";
+            for(let parameter of parameters){
+                out+=`
+                    <tr>
+                        <td>${parameter.TEMPERATURE}</td>
+                `;
+            }
+            placeholder.innerHTML = out;
+        });
+    }
+    setInterval(function(){
+        LoadData();
+    }, 1000);
+</script>
+</html>
